@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
+using TodoApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using TodoApi.Data;
 
 namespace TodoApi
 {
@@ -29,6 +33,10 @@ namespace TodoApi
             services.AddControllers();
 
             ConfigureSwagger(services);
+
+            services.AddDbContext<Context>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            );
         }
 
         private static void ConfigureSwagger(IServiceCollection services)
